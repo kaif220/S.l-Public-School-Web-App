@@ -1,0 +1,7 @@
+@model List<FeeRecord>
+@{ ViewData["Title"] = "My Fees"; }
+<div class="panel"><div class="table-responsive"><table class="table align-middle">
+  <thead><tr><th>Description</th><th>Amount</th><th>Due Date</th><th>Status</th></tr></thead>
+  <tbody>@foreach (var f in Model) { <tr><td>@f.Description</td><td>₹@f.Amount.ToString("N0")</td><td>@f.DueDate.ToString("dd MMM yyyy")</td>
+    <td>@if (f.IsPaid) { <span class="badge bg-success">Paid on @(f.PaidOn?.ToString("dd MMM"))</span> } else { <span class="badge bg-danger">Pending</span> }</td></tr> }</tbody></table></div>
+  <p class="small text-muted mb-0">Fees can be paid at the school accounts office.</p></div>

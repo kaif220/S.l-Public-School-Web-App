@@ -1,0 +1,12 @@
+@model TeacherForm
+@{ ViewData["Title"] = "Add Teacher"; }
+<div class="panel"><form asp-action="CreateTeacher" method="post"><div class="row g-3">
+  <div asp-validation-summary="All" class="text-danger small"></div>
+  <div class="col-md-6"><label class="form-label">Full Name</label><input asp-for="FullName" class="form-control" /></div>
+  <div class="col-md-6"><label class="form-label">Subject</label><input asp-for="Subject" class="form-control" /></div>
+  <div class="col-md-6"><label class="form-label">Login Email</label><input asp-for="Email" class="form-control" /></div>
+  <div class="col-md-6"><label class="form-label">Password (min 6)</label><input asp-for="Password" class="form-control" /></div>
+  <div class="col-md-6"><label class="form-label">Qualification</label><input asp-for="Qualification" class="form-control" /></div>
+  <div class="col-md-6"><label class="form-label">Phone</label><input asp-for="Phone" class="form-control" /></div>
+  <div class="col-12"><button class="btn btn-primary">Save</button> <a class="btn btn-light" asp-action="Teachers">Cancel</a></div>
+</div></form></div>

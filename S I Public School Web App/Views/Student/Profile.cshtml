@@ -1,0 +1,11 @@
+@model Student
+@{ ViewData["Title"] = "My Profile"; }
+<div class="panel"><dl class="row mb-0">
+  <dt class="col-sm-3">Name</dt><dd class="col-sm-9">@Model.AppUser.FullName</dd>
+  <dt class="col-sm-3">Email</dt><dd class="col-sm-9">@Model.AppUser.Email</dd>
+  <dt class="col-sm-3">Class</dt><dd class="col-sm-9">@Model.ClassName - @Model.Section</dd>
+  <dt class="col-sm-3">Roll No</dt><dd class="col-sm-9">@Model.RollNo</dd>
+  <dt class="col-sm-3">Parent</dt><dd class="col-sm-9">@Model.ParentName</dd>
+  <dt class="col-sm-3">Phone</dt><dd class="col-sm-9">@Model.Phone</dd>
+  <dt class="col-sm-3">Address</dt><dd class="col-sm-9">@Model.Address</dd>
+</dl></div>

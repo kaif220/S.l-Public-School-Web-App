@@ -1,0 +1,17 @@
+@model List<Student>
+@{ ViewData["Title"] = "Students"; }
+<div class="panel">
+  <div class="d-flex flex-wrap gap-2 justify-content-between mb-3">
+    <form method="get" class="d-flex gap-2"><input name="q" value="@ViewBag.Q" class="form-control" placeholder="Search name / roll / class" /><button class="btn btn-outline-primary">Search</button></form>
+    <a class="btn btn-primary" asp-action="CreateStudent"><i class="bi bi-plus-lg"></i> Add Student</a>
+  </div>
+  <div class="table-responsive"><table class="table table-hover align-middle">
+    <thead><tr><th>Roll</th><th>Name</th><th>Class</th><th>Parent</th><th>Phone</th><th>Email</th><th></th></tr></thead>
+    <tbody>
+    @foreach (var s in Model)
+    {
+      <tr><td>@s.RollNo</td><td>@s.AppUser.FullName</td><td>@s.ClassName-@s.Section</td><td>@s.ParentName</td><td>@s.Phone</td><td>@s.AppUser.Email</td>
+      <td><form asp-action="DeleteStudent" asp-route-id="@s.Id" method="post" onsubmit="return confirm('Delete this student?')"><button class="btn btn-sm btn-outline-danger"><i class="bi bi-trash"></i></button></form></td></tr>
+    }
+    </tbody></table></div>
+</div>

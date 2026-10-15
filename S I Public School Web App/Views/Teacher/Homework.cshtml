@@ -1,0 +1,21 @@
+@model List<Homework>
+@{ ViewData["Title"] = "Homework"; }
+<div class="row g-3">
+  <div class="col-lg-4"><div class="panel"><h6>Post Homework</h6>
+    <form asp-action="AddHomework" method="post">
+      <div class="mb-2"><select name="ClassName" class="form-select">@foreach (var c in SchoolData.Classes) { <option value="@c">Class @c</option> }</select></div>
+      <div class="mb-2"><input name="Subject" class="form-control" value="@ViewBag.Subject" required /></div>
+      <div class="mb-2"><input name="Title" class="form-control" placeholder="Title" required /></div>
+      <div class="mb-2"><textarea name="Description" class="form-control" rows="3" placeholder="Details"></textarea></div>
+      <div class="mb-2"><input name="DueDate" type="date" class="form-control" required /></div>
+      <button class="btn btn-primary w-100">Post</button>
+    </form></div></div>
+  <div class="col-lg-8">
+    @foreach (var h in Model)
+    {
+      <div class="panel mb-3 d-flex justify-content-between gap-3"><div><strong>@h.Title</strong> <span class="badge bg-primary">Class @h.ClassName</span> <span class="badge bg-secondary">@h.Subject</span>
+        <p class="mb-0 small text-muted">@h.Description</p><small>Due: @h.DueDate.ToString("dd MMM yyyy") · by @h.TeacherName</small></div>
+      <form asp-action="DeleteHomework" asp-route-id="@h.Id" method="post"><button class="btn btn-sm btn-outline-danger"><i class="bi bi-trash"></i></button></form></div>
+    }
+  </div>
+</div>

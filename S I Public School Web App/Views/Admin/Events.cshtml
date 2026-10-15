@@ -1,0 +1,18 @@
+@model List<SchoolEvent>
+@{ ViewData["Title"] = "Events"; }
+<div class="row g-3">
+  <div class="col-lg-4"><div class="panel"><h6>Add Event</h6>
+    <form asp-action="AddEvent" method="post">
+      <div class="mb-2"><input name="Title" class="form-control" placeholder="Title" required /></div>
+      <div class="mb-2"><input name="Date" type="date" class="form-control" required /></div>
+      <div class="mb-2"><textarea name="Description" class="form-control" rows="3" placeholder="Description"></textarea></div>
+      <button class="btn btn-primary w-100">Add Event</button>
+    </form></div></div>
+  <div class="col-lg-8">
+    @foreach (var e in Model)
+    {
+      <div class="panel mb-3 d-flex justify-content-between gap-3"><div><strong>@e.Title</strong> <span class="badge bg-success">@e.Date.ToString("dd MMM yyyy")</span><p class="mb-0 small text-muted">@e.Description</p></div>
+      <form asp-action="DeleteEvent" asp-route-id="@e.Id" method="post"><button class="btn btn-sm btn-outline-danger"><i class="bi bi-trash"></i></button></form></div>
+    }
+  </div>
+</div>

@@ -1,0 +1,16 @@
+@model List<ExamResult>
+@{ ViewData["Title"] = "Marks Entry"; }
+<div class="row g-3">
+  <div class="col-lg-4"><div class="panel"><h6>Add Marks</h6>
+    <form asp-action="AddResult" method="post">
+      <div class="mb-2"><select name="StudentId" class="form-select" required><option value="">-- Student --</option>
+        @foreach (var s in (List<Student>)ViewBag.Students) { <option value="@s.Id">@s.AppUser.FullName (@s.ClassName-@s.Section)</option> }</select></div>
+      <div class="mb-2"><input name="Exam" class="form-control" placeholder="Exam (e.g. Unit Test 2)" required /></div>
+      <div class="mb-2"><input name="Subject" class="form-control" value="@ViewBag.Subject" required /></div>
+      <div class="row g-2 mb-2"><div class="col"><input name="Marks" type="number" class="form-control" placeholder="Marks" required /></div><div class="col"><input name="MaxMarks" type="number" class="form-control" value="100" required /></div></div>
+      <button class="btn btn-primary w-100">Save</button>
+    </form></div></div>
+  <div class="col-lg-8"><div class="panel"><h6>Recent Entries</h6><div class="table-responsive"><table class="table table-sm">
+    <thead><tr><th>Student</th><th>Exam</th><th>Subject</th><th>Marks</th></tr></thead>
+    <tbody>@foreach (var r in Model) { <tr><td>@r.Student.AppUser.FullName</td><td>@r.Exam</td><td>@r.Subject</td><td>@r.Marks / @r.MaxMarks</td></tr> }</tbody></table></div></div></div>
+</div>
