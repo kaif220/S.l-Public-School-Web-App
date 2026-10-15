@@ -1,0 +1,11 @@
+@model List<SchoolEvent>
+@{ ViewData["Title"] = "Events"; }
+<div class="page-head text-center"><h1>School Events</h1></div>
+<div class="container my-5"><div class="row g-4">
+  @foreach (var e in Model)
+  {
+    <div class="col-md-6 col-lg-4"><div class="card card-hover p-4">
+      <span class="badge @(e.Date >= DateTime.Today ? "bg-success" : "bg-secondary") mb-2 align-self-start">@e.Date.ToString("dd MMM yyyy")</span>
+      <h5>@e.Title</h5><p class="text-muted mb-0">@e.Description</p></div></div>
+  }
+</div></div>

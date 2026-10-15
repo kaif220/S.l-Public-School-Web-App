@@ -1,0 +1,25 @@
+@model AttendanceVm
+@{ ViewData["Title"] = "Attendance"; }
+<div class="panel mb-3">
+  <form method="get" class="row g-2">
+    <div class="col-6 col-md-3"><select name="cls" class="form-select">@foreach (var c in SchoolData.Classes) { <option value="@c" selected="@(Model.ClassName == c)">Class @c</option> }</select></div>
+    <div class="col-6 col-md-2"><select name="section" class="form-select">@foreach (var c in SchoolData.Sections) { <option value="@c" selected="@(Model.Section == c)">@c</option> }</select></div>
+    <div class="col-12 col-md-3"><input type="date" name="date" value="@Model.Date.ToString("yyyy-MM-dd")" class="form-control" /></div>
+    <div class="col-auto"><button class="btn btn-primary">Load</button></div>
+  </form>
+</div>
+<div class="panel">
+  @if (!Model.Students.Any()) { <p class="text-muted mb-0">No students in this class/section.</p> }
+  else
+  {
+    <form asp-action="SaveAttendance" method="post">
+      <input type="hidden" name="cls" value="@Model.ClassName" /><input type="hidden" name="section" value="@Model.Section" /><input type="hidden" name="date" value="@Model.Date.ToString("yyyy-MM-dd")" />
+      <div class="form-check mb-2"><input class="form-check-input" type="checkbox" id="all" onclick="document.querySelectorAll('.p').forEach(c=>c.checked=this.checked)" /><label class="form-check-label fw-semibold" for="all">Mark all present</label></div>
+      <div class="table-responsive"><table class="table align-middle">
+        <thead><tr><th>Roll</th><th>Name</th><th>Present</th></tr></thead>
+        <tbody>@foreach (var s in Model.Students) { <tr><td>@s.RollNo</td><td>@s.AppUser.FullName</td><td><input class="form-check-input p" type="checkbox" name="presentIds" value="@s.Id" checked="@Model.PresentIds.Contains(s.Id)" /></td></tr> }</tbody>
+      </table></div>
+      <button class="btn btn-success">Save Attendance</button>
+    </form>
+  }
+</div>

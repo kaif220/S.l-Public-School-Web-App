@@ -1,0 +1,22 @@
+@{ ViewData["Title"] = "Facilities"; }
+<div class="page-head text-center"><h1>Our Facilities</h1></div>
+<div class="container my-5">
+  <div class="row g-4">
+    @foreach (var f in new[] {
+      ("bi-pc-display","Smart Classes","Digital boards and projectors in every classroom."),
+      ("bi-flask","Science Labs","Well-equipped Physics, Chemistry and Biology labs."),
+      ("bi-laptop","Computer Lab","Modern computers with high-speed internet."),
+      ("bi-book","Library","Thousands of books, journals and a quiet reading hall."),
+      ("bi-bicycle","Sports Ground","Cricket, football, basketball, kho-kho and athletics."),
+      ("bi-bus-front","Transport","GPS-enabled safe buses covering all major routes."),
+      ("bi-music-note-beamed","Music &amp; Dance","Dedicated studios with trained instructors."),
+      ("bi-heart-pulse","Medical Room","First-aid room with a visiting doctor and nurse."),
+      ("bi-cup-hot","Cafeteria","Hygienic and nutritious meals every day."),
+      ("bi-camera-video","CCTV Security","24x7 surveillance for complete campus safety."),
+      ("bi-lightbulb","Innovation Lab","Robotics and STEM activities for curious minds."),
+      ("bi-palette","Art Room","Painting, craft and creative workshops.") })
+    {
+      <div class="col-sm-6 col-lg-4"><div class="card card-hover p-4"><div class="icon-circle"><i class="bi @f.Item1"></i></div><h5>@Html.Raw(f.Item2)</h5><p class="text-muted mb-0">@f.Item3</p></div></div>
+    }
+  </div>
+</div>

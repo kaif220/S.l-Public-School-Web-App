@@ -1,0 +1,13 @@
+@model List<Student>
+@{ ViewData["Title"] = "Students"; }
+<div class="panel">
+  <form method="get" class="row g-2 mb-3">
+    <div class="col-6 col-md-3"><select name="cls" class="form-select"><option value="">All Classes</option>@foreach (var c in SchoolData.Classes) { <option value="@c" selected="@((string)ViewBag.Cls == c)">Class @c</option> }</select></div>
+    <div class="col-6 col-md-3"><select name="section" class="form-select"><option value="">All Sections</option>@foreach (var c in SchoolData.Sections) { <option value="@c" selected="@((string)ViewBag.Section == c)">@c</option> }</select></div>
+    <div class="col-auto"><button class="btn btn-primary">Filter</button></div>
+  </form>
+  <div class="table-responsive"><table class="table table-hover">
+    <thead><tr><th>Roll</th><th>Name</th><th>Class</th><th>Parent</th><th>Phone</th></tr></thead>
+    <tbody>@foreach (var s in Model) { <tr><td>@s.RollNo</td><td>@s.AppUser.FullName</td><td>@s.ClassName-@s.Section</td><td>@s.ParentName</td><td>@s.Phone</td></tr> }</tbody>
+  </table></div>
+</div>

@@ -1,0 +1,9 @@
+@model List<Homework>
+@{ ViewData["Title"] = "Homework"; }
+@foreach (var h in Model)
+{
+  <div class="panel mb-3"><strong>@h.Title</strong> <span class="badge bg-secondary">@h.Subject</span>
+  <span class="badge @(h.DueDate >= DateTime.Today ? "bg-warning text-dark" : "bg-light text-dark")">Due @h.DueDate.ToString("dd MMM yyyy")</span>
+  <p class="mb-0 small text-muted">@h.Description</p><small>By @h.TeacherName</small></div>
+}
+@if (!Model.Any()) { <div class="panel text-muted">No homework assigned.</div> }

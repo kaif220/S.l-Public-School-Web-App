@@ -1,0 +1,10 @@
+@model List<Notice>
+@{ ViewData["Title"] = "Notices"; }
+<div class="page-head text-center"><h1>Notice Board</h1></div>
+<div class="container my-5">
+  @foreach (var n in Model)
+  {
+    <div class="panel mb-3"><div class="d-flex justify-content-between flex-wrap"><h5 class="mb-1">@n.Title</h5><span class="badge bg-primary align-self-start">@n.PostedOn.ToString("dd MMM yyyy")</span></div><p class="mb-0 text-muted">@n.Body</p></div>
+  }
+  @if (!Model.Any()) { <p class="text-muted">No notices yet.</p> }
+</div>

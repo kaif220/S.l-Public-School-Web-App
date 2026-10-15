@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>@ViewData["Title"] - S.I Public School</title>
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" />
+<link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css" rel="stylesheet" />
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet" />
+<link href="~/css/site.css" rel="stylesheet" />
+</head>
+<body class="dash-body">
+@{
+    var role = User.IsInRole("Admin") ? "Admin" : User.IsInRole("Teacher") ? "Teacher" : "Student";
+    var current = ViewContext.RouteData.Values["action"]?.ToString();
+    string Act(string a) => current == a ? "active" : "";
+}
+<div class="d-flex">
+  <aside class="sidebar offcanvas-lg offcanvas-start" id="side">
+    <div class="p-3 border-bottom border-secondary-subtle">
+      <a class="text-white text-decoration-none fw-bold fs-5" asp-controller="Home" asp-action="Index"><i class="bi bi-mortarboard-fill me-2"></i>S.I Public</a>
+      <div class="small text-white-50 mt-1">@role Portal</div>
+    </div>
+    <nav class="nav flex-column p-2">
+      <a class="nav-link @Act("Dashboard")" asp-controller="@role" asp-action="Dashboard"><i class="bi bi-speedometer2"></i> Dashboard</a>
+      @if (role == "Admin")
+      {
+        <a class="nav-link @Act("Students")" asp-controller="Admin" asp-action="Students"><i class="bi bi-people"></i> Students</a>
+        <a class="nav-link @Act("Teachers")" asp-controller="Admin" asp-action="Teachers"><i class="bi bi-person-workspace"></i> Teachers</a>
+        <a class="nav-link @Act("Fees")" asp-controller="Admin" asp-action="Fees"><i class="bi bi-cash-coin"></i> Fees</a>
+        <a class="nav-link @Act("Notices")" asp-controller="Admin" asp-action="Notices"><i class="bi bi-megaphone"></i> Notices</a>
+        <a class="nav-link @Act("Events")" asp-controller="Admin" asp-action="Events"><i class="bi bi-calendar-event"></i> Events</a>
+        <a class="nav-link @Act("Enquiries")" asp-controller="Admin" asp-action="Enquiries"><i class="bi bi-inbox"></i> Enquiries</a>
+      }
+      else if (role == "Teacher")
+      {
+        <a class="nav-link @Act("Students")" asp-controller="Teacher" asp-action="Students"><i class="bi bi-people"></i> Students</a>
+        <a class="nav-link @Act("Attendance")" asp-controller="Teacher" asp-action="Attendance"><i class="bi bi-calendar-check"></i> Attendance</a>
+        <a class="nav-link @Act("Marks")" asp-controller="Teacher" asp-action="Marks"><i class="bi bi-award"></i> Marks</a>
+        <a class="nav-link @Act("Homework")" asp-controller="Teacher" asp-action="Homework"><i class="bi bi-journal-text"></i> Homework</a>
+      }
+      else
+      {
+        <a class="nav-link @Act("Attendance")" asp-controller="Student" asp-action="Attendance"><i class="bi bi-calendar-check"></i> Attendance</a>
+        <a class="nav-link @Act("Results")" asp-controller="Student" asp-action="Results"><i class="bi bi-award"></i> Results</a>
+        <a class="nav-link @Act("Homework")" asp-controller="Student" asp-action="Homework"><i class="bi bi-journal-text"></i> Homework</a>
+        <a class="nav-link @Act("Fees")" asp-controller="Student" asp-action="Fees"><i class="bi bi-cash-coin"></i> Fees</a>
+        <a class="nav-link @Act("Profile")" asp-controller="Student" asp-action="Profile"><i class="bi bi-person-circle"></i> Profile</a>
+      }
+    </nav>
+  </aside>
+  <div class="flex-grow-1 dash-main">
+    <header class="topbar d-flex align-items-center justify-content-between px-3 py-2">
+      <button class="btn btn-outline-secondary d-lg-none" data-bs-toggle="offcanvas" data-bs-target="#side"><i class="bi bi-list"></i></button>
+      <h5 class="mb-0 ms-2 me-auto">@ViewData["Title"]</h5>
+      <span class="me-3 small text-muted d-none d-md-inline"><i class="bi bi-person-circle"></i> @User.Identity.Name</span>
+      <form asp-controller="Account" asp-action="Logout" method="post"><button class="btn btn-sm btn-outline-danger"><i class="bi bi-box-arrow-right"></i> Logout</button></form>
+    </header>
+    <div class="p-3 p-md-4">
+      @if (TempData["Msg"] != null)
+      {
+        <div class="alert alert-success alert-dismissible fade show">@TempData["Msg"]<button class="btn-close" data-bs-dismiss="alert"></button></div>
+      }
+      @RenderBody()
+    </div>
+  </div>
+</div>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.4/dist/chart.umd.min.js"></script>
+@await RenderSectionAsync("Scripts", required: false)
+</body>
+</html>

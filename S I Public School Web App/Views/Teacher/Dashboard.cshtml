@@ -1,0 +1,18 @@
+@model TeacherDashVm
+@{ ViewData["Title"] = "Teacher Dashboard"; }
+<div class="panel mb-4"><h4 class="mb-0">Welcome, @Model.Teacher.AppUser.FullName</h4><span class="text-muted">Subject: @Model.Teacher.Subject</span></div>
+<div class="row g-3 mb-4">
+  <div class="col-md-4"><div class="kpi bg-g1 d-flex justify-content-between"><div><div>Total Students</div><h2>@Model.TotalStudents</h2></div><i class="bi bi-people"></i></div></div>
+  <div class="col-md-4"><div class="kpi bg-g2 d-flex justify-content-between"><div><div>Present Today</div><h2>@Model.TodayPresent</h2></div><i class="bi bi-calendar-check"></i></div></div>
+  <div class="col-md-4"><div class="kpi bg-g4 d-flex justify-content-between"><div><div>Homework Posted</div><h2>@Model.HomeworkPosted</h2></div><i class="bi bi-journal-text"></i></div></div>
+</div>
+<div class="row g-3 mb-4">
+  <div class="col-6 col-md-3"><a class="btn btn-primary w-100 py-3" asp-action="Attendance"><i class="bi bi-calendar-check"></i><br />Take Attendance</a></div>
+  <div class="col-6 col-md-3"><a class="btn btn-success w-100 py-3" asp-action="Marks"><i class="bi bi-award"></i><br />Enter Marks</a></div>
+  <div class="col-6 col-md-3"><a class="btn btn-warning w-100 py-3" asp-action="Homework"><i class="bi bi-journal-text"></i><br />Homework</a></div>
+  <div class="col-6 col-md-3"><a class="btn btn-secondary w-100 py-3" asp-action="Students"><i class="bi bi-people"></i><br />Students</a></div>
+</div>
+<div class="row g-3">
+  <div class="col-lg-6"><div class="panel"><h6>Notices</h6>@foreach (var n in Model.Notices) { <div class="border-bottom py-2"><strong>@n.Title</strong><div class="small text-muted">@n.PostedOn.ToString("dd MMM")</div></div> }</div></div>
+  <div class="col-lg-6"><div class="panel"><h6>Upcoming Events</h6>@foreach (var e in Model.Events) { <div class="border-bottom py-2"><strong>@e.Title</strong><div class="small text-muted">@e.Date.ToString("dd MMM yyyy")</div></div> }</div></div>
+</div>

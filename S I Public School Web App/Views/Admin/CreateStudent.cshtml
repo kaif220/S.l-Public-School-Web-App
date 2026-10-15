@@ -1,0 +1,15 @@
+@model StudentForm
+@{ ViewData["Title"] = "Add Student"; }
+<div class="panel"><form asp-action="CreateStudent" method="post"><div class="row g-3">
+  <div asp-validation-summary="All" class="text-danger small"></div>
+  <div class="col-md-6"><label class="form-label">Full Name</label><input asp-for="FullName" class="form-control" /></div>
+  <div class="col-md-6"><label class="form-label">Roll No</label><input asp-for="RollNo" class="form-control" /></div>
+  <div class="col-md-6"><label class="form-label">Login Email</label><input asp-for="Email" class="form-control" /></div>
+  <div class="col-md-6"><label class="form-label">Password (min 6)</label><input asp-for="Password" class="form-control" /></div>
+  <div class="col-md-3"><label class="form-label">Class</label><select asp-for="ClassName" class="form-select">@foreach (var c in SchoolData.Classes) { <option>@c</option> }</select></div>
+  <div class="col-md-3"><label class="form-label">Section</label><select asp-for="Section" class="form-select">@foreach (var c in SchoolData.Sections) { <option>@c</option> }</select></div>
+  <div class="col-md-6"><label class="form-label">Parent Name</label><input asp-for="ParentName" class="form-control" /></div>
+  <div class="col-md-6"><label class="form-label">Phone</label><input asp-for="Phone" class="form-control" /></div>
+  <div class="col-md-6"><label class="form-label">Address</label><input asp-for="Address" class="form-control" /></div>
+  <div class="col-12"><button class="btn btn-primary">Save</button> <a class="btn btn-light" asp-action="Students">Cancel</a></div>
+</div></form></div>

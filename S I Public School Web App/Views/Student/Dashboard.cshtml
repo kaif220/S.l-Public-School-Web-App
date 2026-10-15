@@ -1,0 +1,20 @@
+@model StudentDashVm
+@{ ViewData["Title"] = "Student Dashboard"; }
+<div class="panel mb-4"><h4 class="mb-0">Welcome, @Model.Student.AppUser.FullName</h4><span class="text-muted">Class @Model.Student.ClassName-@Model.Student.Section · Roll No @Model.Student.RollNo</span></div>
+<div class="row g-3 mb-4">
+  <div class="col-6 col-xl-3"><div class="kpi bg-g2 d-flex justify-content-between"><div><div>Attendance</div><h2>@Model.AttendancePercent%</h2></div><i class="bi bi-calendar-check"></i></div></div>
+  <div class="col-6 col-xl-3"><div class="kpi bg-g1 d-flex justify-content-between"><div><div>Average Score</div><h2>@Model.AvgPercent%</h2></div><i class="bi bi-award"></i></div></div>
+  <div class="col-6 col-xl-3"><div class="kpi bg-g3 d-flex justify-content-between"><div><div>Homework Due</div><h2>@Model.HomeworkCount</h2></div><i class="bi bi-journal-text"></i></div></div>
+  <div class="col-6 col-xl-3"><div class="kpi bg-g5 d-flex justify-content-between"><div><div>Pending Fees</div><h2>₹@Model.PendingFees.ToString("N0")</h2></div><i class="bi bi-cash-coin"></i></div></div>
+</div>
+<div class="row g-3">
+  <div class="col-lg-7"><div class="panel"><h6>Subject-wise Performance (%)</h6><canvas id="marksChart" height="140"></canvas></div></div>
+  <div class="col-lg-5"><div class="panel"><h6>Notices</h6>@foreach (var n in Model.Notices) { <div class="border-bottom py-2"><strong>@n.Title</strong><div class="small text-muted">@n.Body</div></div> }</div></div>
+</div>
+@section Scripts {
+<script>
+new Chart(document.getElementById('marksChart'), { type:'bar',
+  data:{ labels:@Html.Raw(System.Text.Json.JsonSerializer.Serialize(Model.SubjectLabels)), datasets:[{ label:'Percent', data:@Html.Raw(System.Text.Json.JsonSerializer.Serialize(Model.SubjectPercents)), backgroundColor:'#10b981', borderRadius:6 }] },
+  options:{ plugins:{legend:{display:false}}, scales:{ y:{ beginAtZero:true, max:100 } } } });
+</script>
+}

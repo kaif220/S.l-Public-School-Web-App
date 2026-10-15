@@ -1,0 +1,17 @@
+@model List<Notice>
+@{ ViewData["Title"] = "Notices"; }
+<div class="row g-3">
+  <div class="col-lg-4"><div class="panel"><h6>Publish Notice</h6>
+    <form asp-action="AddNotice" method="post">
+      <div class="mb-2"><input name="Title" class="form-control" placeholder="Title" required /></div>
+      <div class="mb-2"><textarea name="Body" class="form-control" rows="4" placeholder="Details" required></textarea></div>
+      <button class="btn btn-primary w-100">Publish</button>
+    </form></div></div>
+  <div class="col-lg-8">
+    @foreach (var n in Model)
+    {
+      <div class="panel mb-3 d-flex justify-content-between gap-3"><div><strong>@n.Title</strong> <span class="badge bg-primary">@n.PostedOn.ToString("dd MMM yyyy")</span><p class="mb-0 small text-muted">@n.Body</p></div>
+      <form asp-action="DeleteNotice" asp-route-id="@n.Id" method="post"><button class="btn btn-sm btn-outline-danger"><i class="bi bi-trash"></i></button></form></div>
+    }
+  </div>
+</div>

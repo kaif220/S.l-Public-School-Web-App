@@ -1,0 +1,10 @@
+@model List<ExamResult>
+@{ ViewData["Title"] = "My Results"; }
+@foreach (var g in Model.GroupBy(r => r.Exam))
+{
+  var total = g.Sum(r => r.Marks); var max = g.Sum(r => r.MaxMarks);
+  <div class="panel mb-3"><h5>@g.Key <span class="badge bg-primary">@total / @max (@Math.Round(total * 100.0 / max, 1)%)</span></h5>
+  <table class="table table-sm mb-0"><thead><tr><th>Subject</th><th>Marks</th><th>Max</th></tr></thead>
+  <tbody>@foreach (var r in g) { <tr><td>@r.Subject</td><td>@r.Marks</td><td>@r.MaxMarks</td></tr> }</tbody></table></div>
+}
+@if (!Model.Any()) { <div class="panel text-muted">No results published yet.</div> }

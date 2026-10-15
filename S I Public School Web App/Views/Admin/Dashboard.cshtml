@@ -1,0 +1,29 @@
+@model AdminDashVm
+@{ ViewData["Title"] = "Admin Dashboard"; }
+<div class="row g-3 mb-4">
+  <div class="col-6 col-xl-3"><div class="kpi bg-g1 d-flex justify-content-between align-items-center"><div><div>Students</div><h2>@Model.Students</h2></div><i class="bi bi-people"></i></div></div>
+  <div class="col-6 col-xl-3"><div class="kpi bg-g2 d-flex justify-content-between align-items-center"><div><div>Teachers</div><h2>@Model.Teachers</h2></div><i class="bi bi-person-workspace"></i></div></div>
+  <div class="col-6 col-xl-3"><div class="kpi bg-g3 d-flex justify-content-between align-items-center"><div><div>Fees Collected</div><h2>₹@Model.FeesCollected.ToString("N0")</h2></div><i class="bi bi-cash-coin"></i></div></div>
+  <div class="col-6 col-xl-3"><div class="kpi bg-g5 d-flex justify-content-between align-items-center"><div><div>Fees Pending</div><h2>₹@Model.FeesPending.ToString("N0")</h2></div><i class="bi bi-exclamation-circle"></i></div></div>
+</div>
+<div class="row g-3">
+  <div class="col-lg-7"><div class="panel"><h6>Students per Class</h6><canvas id="classChart" height="130"></canvas></div></div>
+  <div class="col-lg-5"><div class="panel"><h6>Fees Overview</h6><canvas id="feeChart" height="190"></canvas></div></div>
+  <div class="col-12"><div class="panel">
+    <div class="d-flex justify-content-between"><h6>Recent Enquiries</h6><a asp-action="Enquiries">View all</a></div>
+    <div class="table-responsive"><table class="table table-sm align-middle mb-0">
+      <thead><tr><th>Name</th><th>Phone</th><th>Type</th><th>Date</th></tr></thead>
+      <tbody>
+      @foreach (var e in (List<Enquiry>)ViewBag.Recent) { <tr><td>@e.Name</td><td>@e.Phone</td><td><span class="badge bg-info">@e.Type</span></td><td>@e.CreatedOn.ToString("dd MMM, hh:mm tt")</td></tr> }
+      </tbody></table></div>
+  </div></div>
+</div>
+@section Scripts {
+<script>
+new Chart(document.getElementById('classChart'), { type:'bar',
+  data:{ labels:@Html.Raw(System.Text.Json.JsonSerializer.Serialize(Model.ClassLabels)), datasets:[{ label:'Students', data:@Html.Raw(System.Text.Json.JsonSerializer.Serialize(Model.ClassCounts)), backgroundColor:'#3b82f6', borderRadius:6 }] },
+  options:{ plugins:{legend:{display:false}}, scales:{ y:{ beginAtZero:true, ticks:{ precision:0 } } } } });
+new Chart(document.getElementById('feeChart'), { type:'doughnut',
+  data:{ labels:['Collected','Pending'], datasets:[{ data:[@Model.FeesCollected.ToString(System.Globalization.CultureInfo.InvariantCulture), @Model.FeesPending.ToString(System.Globalization.CultureInfo.InvariantCulture)], backgroundColor:['#10b981','#ef4444'] }] } });
+</script>
+}
